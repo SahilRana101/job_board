@@ -1,0 +1,103 @@
+{% extends 'login_page/base.html' %}
+
+{% block title %} Jobs Posted {% endblock %}
+
+{% block logout %}
+<li class="nav-item active">
+  <a class="nav-link" href="/">Logout</a>
+</li>
+{% endblock %}
+
+{% block body %}
+<main role="main" class="container" style="border:1px solid green; margin-top: 0px; margin-left: -10px; margin-right: -10px; margin-bottom: 0px;">
+  <div class="row">
+    <div class="col-md-8">
+        {% if job_posts %}
+            <ol>
+            {% for i in job_posts %}
+                <li><div class="wrapper">
+                        <div class="container-fluid">
+<!--                          <div class="row content">-->
+                            <div class="col-sm-3 sidenav">
+                                <br>
+                            </div>
+                            <div class="col-sm-9">
+                              <hr>
+                              <h2>{{ i.name }}</h2>
+                              <h5><span class="label label-danger">{{ i.skills }}</span></h5><br>
+                                  <br><br>
+                            </div>
+<!--                          </div>-->
+                        </div>
+                        <footer class="container-fluid">
+                            <form class="mx-1 mx-md-4" method="POST"> {% csrf_token %}
+                                <div class="form-outline flex-fill mb-0">
+                                  <input type="hidden" id="form3Example4c" class="form-control" name="job_id" value="{{ i.id }}"/>
+                                </div>
+                            <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4" style="width:50px; float:right;">
+                                <button type="submit" class="btn btn-primary btn-lg" name="delete" value="delete">Delete</button>
+                            </div>
+                            <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4" style="width:250px; float:right;">
+                                <!-- <button type="submit" class="btn btn-primary btn-lg" name="view_applicants" value="view">View Applicants</button> --->
+                            <a href="/r_see_all_applicants/{{i.id}}/" class="btn btn-danger">View Applicants</a>
+
+                            </div>
+                            <p>Posted:&nbsp;&nbsp;{{ i.time_posted }},&nbsp;{{ i.date_posted }}</p>
+                            </form>
+                        </footer>
+                    </div>
+                    <br><br><br></li>
+            {% endfor %}
+            </ol>
+        {% else %}
+            <p>You haven't posted any jobs.</p>
+        {% endif %}
+<!--            <div class="container">-->
+<!--                <div class="container-fluid">-->
+<!--                  <div class="row content">-->
+<!--                    <div class="col-sm-3 sidenav"><br>-->
+<!--                    </div>-->
+<!--                    <div class="col-sm-9">-->
+<!--                      <hr>-->
+<!--                      <h2>Job name</h2>-->
+<!--                      <h5><span class="label label-danger">Job Description</span></h5><br>-->
+<!--                      <p>Description-->
+<!--                          <br><br>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <footer class="container-fluid">-->
+<!--                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4" style="width:250px; float:right;">-->
+<!--                      <button type="button" class="btn btn-primary btn-lg">Apply</button>-->
+<!--                  </div>-->
+<!--                    <p>Date Posted</p>-->
+<!--                    <p>Time Posted</p>-->
+<!--                </footer>-->
+<!--            </div>-->
+    </div>
+    <div class="col-md-4">
+      <div class="content-section">
+        <p class='text-muted'>Help unemployed people:</p>
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-light"><a href="../r_write_job/" style="text-decoration: none;">Write a Job post</a></li>
+          <li class="list-group-item list-group-item-light"><a href="../r_posted_jobs/" style="text-decoration: none;">Show Job posts</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity=
+        "sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block js %}
+<script>
+    {% if alert %}
+    document.location = "/r_posted_jobs"
+    {% endif %}
+
+    {% if alert2 %}
+    document.location = "/r_see_all_applicants"
+    {% endif %}
+</script>
+{% endblock %}

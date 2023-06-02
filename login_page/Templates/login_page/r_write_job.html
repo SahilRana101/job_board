@@ -1,0 +1,75 @@
+{% extends 'login_page/base.html' %}
+
+{% block title %} Write Job Post {% endblock %}
+
+{% block logout %}
+<li class="nav-item active">
+  <a class="nav-link" href="/">Logout</a>
+</li>
+{% endblock %}
+
+{% block body %}
+<div class="row align-items-center pt-4 pb-3">
+<section class="vh-100" style="background-color: #2779e2;">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-9">
+        <h1 class="text-white mb-4">Write Job Description</h1>
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-body">
+            <form class="mx-1 mx-md-4" enctype="multipart/form-data" method="POST"> {% csrf_token %}
+            <div class="row align-items-center pt-4 pb-3">
+              <div class="col-md-3 ps-5">
+                <h6 class="mb-0">Position Name</h6>
+              </div>
+              <div class="col-md-9 pe-5">
+                <input type="text" class="form-control form-control-lg" name="name" required/>
+              </div>
+            </div>
+            <hr class="mx-n3">
+            <div class="row align-items-center py-3">
+              <div class="col-md-3 ps-5">
+                <h6 class="mb-0">Skills Required</h6>
+              </div>
+              <div class="col-md-9 pe-5">
+                <textarea class="form-control" rows="3" placeholder="example: python, java, etc" name="skills" required></textarea>
+              </div>
+            </div>
+            <hr class="mx-n3">
+            <div class="row align-items-center py-3">
+              <div class="col-md-3 ps-5">
+                <h6 class="mb-0">Responsibilities</h6>
+              </div>
+              <div class="col-md-9 pe-5">
+                <textarea class="form-control" rows="3" placeholder="Employee Responsibilities according to job position:" name="rep" required></textarea>
+              </div>
+            </div>
+            <hr class="mx-n3">
+            <div class="px-5 py-4">
+              <button type="submit" class="btn btn-primary btn-lg">Post Job</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+      <div class="content-section">
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-light"><a href="../r_posted_jobs/" style="text-decoration: none;">Jobs posted by you</a></li>
+        </ul>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    {% if alert %}
+    alert("Job posted successfully.")
+    document.location = "/r_posted_jobs"
+    {% endif %}
+</script>
+{% endblock %}
